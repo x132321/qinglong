@@ -1,12 +1,9 @@
-<p align="center">
-  <a href="https://github.com/whyour/qinglong">
-    <img width="150" src="https://user-images.githubusercontent.com/22700758/191449379-f9f56204-0e31-4a16-be5a-331f52696a73.png">
-  </a>
-</p>
-
-<h1 align="center">Green Dragon</h1>
-
 <div align="center">
+<img width="100" src="https://user-images.githubusercontent.com/22700758/191449379-f9f56204-0e31-4a16-be5a-331f52696a73.png">
+
+<h1 align="center">Qinglong</h1>
+
+[简体中文](./README.md) | English
 
 Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 
@@ -20,11 +17,13 @@ Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 [docker-stars-url]: https://hub.docker.com/r/whyour/qinglong
 [docker-image-size-image]: https://img.shields.io/docker/image-size/whyour/qinglong?style=flat
 [docker-image-size-url]: https://hub.docker.com/r/whyour/qinglong
+
+[Demo](http://demo.dlww.cc:4433/) / [Issues](https://github.com/whyour/qinglong/issues) / [Buy Me a Coffee](https://www.buymeacoffee.com/qinglong)
+
+[演示](http://demo.dlww.cc:4433/) / [反馈](https://github.com/whyour/qinglong/issues) / [Telegram 频道](https://t.me/jiao_long) / [打赏开发者](https://user-images.githubusercontent.com/22700758/244744295-29cd0cd1-c8bb-4ea1-adf6-29bd390ad4dd.jpg)
 </div>
 
-[![](https://user-images.githubusercontent.com/22700758/229290661-03aabe84-8780-4ef0-8e75-2146f4636130.jpeg)](https://whyour.cn)
-
-[简体中文](./README.md) | English
+![cover](https://user-images.githubusercontent.com/22700758/229290661-03aabe84-8780-4ef0-8e75-2146f4636130.jpeg)
 
 ## Features
 
@@ -38,13 +37,7 @@ Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 
 ## Deployment
 
-### Local Deployment
-
-```bash
-# To be refined, see the development steps first (not supported on windows yet)
-```
-
-### Podman Deployment
+### Podman Deployment(Recommended)
 
 1. podman installation
 
@@ -64,7 +57,7 @@ podman run -dit \
   docker.io/whyour/qinglong:latest
 ```
 
-### Docker Deployment
+### Docker Deployment(Recommended)
 
 1. docker installation
 
@@ -103,7 +96,7 @@ docker run -dit \
   whyour/qinglong:latest
 ```
 
-### Docker-compose Deployment
+### Docker-compose Deployment(Recommended)
 
 1. docker-compose installation
 
@@ -123,7 +116,19 @@ docker-compose up -d
 docker-compose down
 ```
 
-3. access
+### Local Deployment
+
+It is recommended to use a pure system installation to avoid losing the original system data, you need to install node/npm/python3/pip3 yourself
+
+```bash
+npm install -g @whyour/qinglong
+qinglong
+# Add the environment variables QL_DIR and QL_DATA_DIR when prompted
+export QL_DIR=""
+export QL_DATA_DIR=""
+# Run again
+qinglong
+```
 
 Open your browser and visit http://{ip}:5700
 
