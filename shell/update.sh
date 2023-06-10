@@ -54,7 +54,7 @@ del_cron() {
     fi
     cron_file="$dir_scripts/${cron}"
     if [[ -f $cron_file ]]; then
-      cron_name=$(grep "new Env" $cron_file | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:^.\(.*\).$:\1:' | head -1)
+      cron_name=$(grep "new Env" $cron_file | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:.*\('\''\|"\)\([^"'\'']*\)\('\''\|"\).*:\2:' | head -1)
       rm -f $cron_file
     fi
     [[ -z $cron_name ]] && cron_name="$cron"
@@ -92,7 +92,7 @@ add_cron() {
                         s|  | |g;
                     }" | sort -u | head -1
       )
-      cron_name=$(grep "new Env" $file | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:^.\(.*\).$:\1:' | head -1)
+      cron_name=$(grep "new Env" $file | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:.*\('\''\|"\)\([^"'\'']*\)\('\''\|"\).*:\2:' | head -1)
       [[ -z $cron_name ]] && cron_name="$file_name"
       [[ -z $cron_line ]] && cron_line=$(grep "cron:" $file | awk -F ":" '{print $2}' | head -1 | xargs)
       [[ -z $cron_line ]] && cron_line=$(grep "cron " $file | awk -F "cron \"" '{print $2}' | awk -F "\" " '{print $1}' | head -1 | xargs)
@@ -193,7 +193,7 @@ update_raw() {
                       s|  | |g;
                   }" | sort -u | head -1
       )
-      cron_name=$(grep "new Env" $raw_file_name | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:^.\(.*\).$:\1:' | head -1)
+      cron_name=$(grep "new Env" $raw_file_name | awk -F "\(" '{print $2}' | awk -F "\)" '{print $1}' | sed 's:.*\('\''\|"\)\([^"'\'']*\)\('\''\|"\).*:\2:' | head -1)
       [[ -z $cron_name ]] && cron_name="$raw_file_name"
       [[ -z $cron_line ]] && cron_line=$(grep "cron:" $raw_file_name | awk -F ":" '{print $2}' | head -1 | xargs)
       [[ -z $cron_line ]] && cron_line=$(grep "cron " $raw_file_name | awk -F "cron \"" '{print $2}' | awk -F "\" " '{print $1}' | head -1 | xargs)
@@ -363,10 +363,10 @@ gen_list_repo() {
   done
   files=$(eval $cmd | sed 's/^..//')
   if [[ $path ]]; then
-    files=$(echo "$files" | egrep $path)
+    files=$(echo "$files" | egrep "$path")
   fi
   if [[ $blackword ]]; then
-    files=$(echo "$files" | egrep -v $blackword)
+    files=$(echo "$files" | egrep -v "$blackword")
   fi
 
   cp -f $file_notify_js "${dir_scripts}/${uniq_path}"
@@ -374,7 +374,7 @@ gen_list_repo() {
 
   if [[ $dependence ]]; then
     cd ${repo_path}
-    results=$(eval $cmd | sed 's/^..//' | egrep $dependence)
+    results=$(eval $cmd | sed 's/^..//' | egrep "$dependence")
     for _file in ${results}; do
       file_path=$(dirname $_file)
       make_dir "${dir_scripts}/${uniq_path}/${file_path}"
@@ -387,7 +387,7 @@ gen_list_repo() {
   fi
 
   for file in ${files}; do
-    filename=$(basename $file)
+    filename=$(basename "$file")
     cp -f $file "$dir_scripts/${uniq_path}/${filename}"
     echo "${uniq_path}/${filename}" >>"$dir_list_tmp/${uniq_path}_scripts.list"
     # cron_id=$(cat $list_crontab_user | grep -E "$cmd_task.* ${uniq_path}_${filename}" | perl -pe "s|.*ID=(.*) $cmd_task.* ${uniq_path}_${filename}\.*|\1|" | head -1 | awk -F " " '{print $1}')
