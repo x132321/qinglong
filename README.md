@@ -9,12 +9,12 @@
 
 Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 
-[![docker version][docker-version-image]][docker-version-url] [![docker pulls][docker-pulls-image]][docker-pulls-url] [![docker stars][docker-stars-image]][docker-stars-url] [![docker image size][docker-image-size-image]][docker-image-size-url]
+[![npm version][npm-version-image]][npm-version-url] [![docker pulls][docker-pulls-image]][docker-pulls-url] [![docker stars][docker-stars-image]][docker-stars-url] [![docker image size][docker-image-size-image]][docker-image-size-url]
 
+[npm-version-image]: https://img.shields.io/npm/v/@whyour/qinglong?style=flat
+[npm-version-url]: https://www.npmjs.com/package/@whyour/qinglong?activeTab=readme
 [docker-pulls-image]: https://img.shields.io/docker/pulls/whyour/qinglong?style=flat
 [docker-pulls-url]: https://hub.docker.com/r/whyour/qinglong
-[docker-version-image]: https://img.shields.io/docker/v/whyour/qinglong?style=flat
-[docker-version-url]: https://hub.docker.com/r/whyour/qinglong/tags?page=1&ordering=last_updated
 [docker-stars-image]: https://img.shields.io/docker/stars/whyour/qinglong?style=flat
 [docker-stars-url]: https://hub.docker.com/r/whyour/qinglong
 [docker-image-size-image]: https://img.shields.io/docker/image-size/whyour/qinglong?style=flat
@@ -25,7 +25,7 @@ Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 [演示](http://demo.dlww.cc:4433/) / [反馈](https://github.com/whyour/qinglong/issues) / [Telegram 频道](https://t.me/jiao_long) / [打赏开发者](https://user-images.githubusercontent.com/22700758/244744295-29cd0cd1-c8bb-4ea1-adf6-29bd390ad4dd.jpg)
 </div>
 
-![cover](https://user-images.githubusercontent.com/22700758/229290661-03aabe84-8780-4ef0-8e75-2146f4636130.jpeg)
+![cover](https://user-images.githubusercontent.com/22700758/244847235-8dc1ca21-e03f-4606-9458-0541fab60413.png)
 
 ## 功能
 
@@ -39,58 +39,10 @@ Timed task management platform supporting Python3, JavaScript, Shell, Typescript
 
 ## 部署
 
-### podman 部署(推荐)
-
-1. podman 安装
+### docker (推荐)
 
 ```bash
-https://podman.io/getting-started/installation
-```
-
-2. 启动容器
-
-```bash
-podman run -dit \
-  --network bridge \
-  -v $PWD/ql/data:/ql/data \
-  -p 5700:5700 \
-  # 部署路径非必须，以斜杠开头和结尾，比如 /test/
-  -e QlBaseUrl="/" \
-  --name qinglong \
-  --hostname qinglong \
-  docker.io/whyour/qinglong:latest
-```
-
-### docker 部署(推荐)
-
-1. docker 安装
-
-```bash
-sudo curl -sSL get.docker.com | sh
-```
-
-2. 配置国内镜像源
-
-```bash
-mkdir -p /etc/docker
-tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": [
-    "https://0b27f0a81a00f3560fbdc00ddd2f99e0.mirror.swr.myhuaweicloud.com",
-    "https://ypzju6vq.mirror.aliyuncs.com",
-    "https://registry.docker-cn.com",
-    "http://hub-mirror.c.163.com",
-    "https://docker.mirrors.ustc.edu.cn"
-  ]
-}
-EOF
-systemctl daemon-reload
-systemctl restart docker
-```
-
-3. 启动容器
-
-```bash
+# curl -sSL get.docker.com | sh
 docker run -dit \
   -v $PWD/ql/data:/ql/data \
   -p 5700:5700 \
@@ -102,17 +54,10 @@ docker run -dit \
   whyour/qinglong:latest
 ```
 
-### docker-compose 部署(推荐)
-
-1. docker-compose 安装
+### docker-compose (推荐)
 
 ```bash
-sudo curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
-```
-
-2. 启动容器
-
-```bash
+#  curl -L https://github.com/docker/compose/releases/download/1.16.1/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
 mkdir qinglong
 wget https://raw.githubusercontent.com/whyour/qinglong/master/docker/docker-compose.yml
 
@@ -122,7 +67,22 @@ docker-compose up -d
 docker-compose down
 ```
 
-### 本机部署
+### podman (推荐)
+
+```bash
+# https://podman.io/getting-started/installation
+podman run -dit \
+  --network bridge \
+  -v $PWD/ql/data:/ql/data \
+  -p 5700:5700 \
+  # 部署路径非必须，以斜杠开头和结尾，比如 /test/
+  -e QlBaseUrl="/" \
+  --name qinglong \
+  --hostname qinglong \
+  docker.io/whyour/qinglong:latest
+```
+
+### 本机
 
 建议使用纯净系统安装，避免系统原有数据丢失，需要自己安装 node/npm/python3/pip3
 
@@ -135,8 +95,6 @@ export QL_DATA_DIR=""
 # 再次执行
 qinglong
 ```
-
-打开你的浏览器，访问 http://{ip}:5700
 
 ## 使用
 
